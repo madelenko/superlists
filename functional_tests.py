@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 
+
 class NewVisitorTest(unittest.TestCase):
 
 	def setUp(self):
@@ -35,19 +36,29 @@ class NewVisitorTest(unittest.TestCase):
 
 		# Hit enter, page updates. List "1: Buy peacock feathers" 
 		inputbox.send_keys(Keys.ENTER)
+		
+		
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(
-			any(row.text == '1: Buy peacock feathers' for row in rows),	
-			"New to-do item did not appear in table"	
-		)
+		self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+
 		# There is still text box to add new item. Enter
 		# "Use peacock feathers to make a fly"
-		self.fail('Finish the test')
+
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		inputbox.send_keys('Use peacock feathers to make a fly')
+		inputbox.send_keys(Keys.ENTER)
 
 		# The page updates again, and now shows both items.
-
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+		self.assertIn(
+			'2: Use peacock feathers to make a fly', [row.text for row in rows]
+			
+		)
+		self.fail('Finish the test')
 		# Site remembers list: unique URL generated.
 
 		# Visit URL and find the list.
