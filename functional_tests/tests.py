@@ -43,7 +43,7 @@ class NewVisitorTest(LiveServerTestCase):
 		# Hit enter, page updates. List "1: Buy peacock feathers" 
 		inputbox.send_keys(Keys.ENTER)
 		your_list_url = self.browser.current_url
-		self.assertRegexpMatches(your_list_url, '/lists/.+')
+		self.assertRegex(your_list_url, '/lists/.+')
 		self.check_for_row_in_list_table('1: Buy peacock feathers')
 
 		# There is still text box to add new item. Enter
@@ -73,7 +73,7 @@ class NewVisitorTest(LiveServerTestCase):
 
 		# Francis gets his own unique URL
 		francis_list_url = self.browser.current_url
-		self.assertRegexpMatches(francis_list_url, '/lists/.+')
+		self.assertRegex(francis_list_url, '/lists/.+')
 		self.assertNotEqual(francis_list_url, your_list_url)
 
 		# Again, there is no trace of your list
